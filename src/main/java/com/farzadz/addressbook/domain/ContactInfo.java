@@ -30,4 +30,8 @@ public class ContactInfo {
 
   private String description;
 
+  public void updateUpdatableProperties(ContactInfo contactInfo) {
+    this.phone = contactInfo.getPhone();
+    this.description = contactInfo.getDescription();
+  }
 }

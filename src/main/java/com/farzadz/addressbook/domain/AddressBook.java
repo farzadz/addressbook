@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,5 +28,10 @@ public class AddressBook {
 
   @ManyToMany(mappedBy = "addressBooks")
   private Set<Person> people;
+
+  public void updateUpdatableProperties(AddressBook addressBook) {
+    this.name = addressBook.getName();
+    this.description = addressBook.getDescription();
+  }
 
 }
