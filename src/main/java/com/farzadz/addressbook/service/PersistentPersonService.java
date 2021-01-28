@@ -56,7 +56,7 @@ public class PersistentPersonService implements PersonService {
 
   @Override
   public List<Person> allPeopleInAddressBook(Long addressBookId) {
-    return personDAO.findByAddressBookId( addressBookId);
+    return personDAO.findByAddressBooksId( addressBookId);
   }
 
 }

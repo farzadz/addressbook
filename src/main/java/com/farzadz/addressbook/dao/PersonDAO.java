@@ -5,7 +5,6 @@ import java.util.List;
 
 public interface PersonDAO extends BaseDAO<Person, Long> {
 
-  List<Person> findByAddressBookId(Long addressBookId);
+  List<Person> findByAddressBooksId(Long addressBookId);
 
-  List<Person> findUniqueToAddressBook(Long addressBookId);
 }
