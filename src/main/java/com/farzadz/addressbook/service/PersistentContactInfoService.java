@@ -6,8 +6,10 @@ import com.farzadz.addressbook.domain.ContactInfo;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PersistentContactInfoService implements ContactInfoService {
 
@@ -45,6 +47,6 @@ public class PersistentContactInfoService implements ContactInfoService {
 
   @Override
   public List<ContactInfo> findAllContactInfoForPerson(Long personId) {
-    return personService.findById(personId).getContactInfos();
+    return contactInfoDAO.findByPersonId(personId);
   }
 }

@@ -6,10 +6,11 @@ import java.util.List;
 
 public interface PersonService extends CrudService<Person, Long> {
 
-  //  Person addContactInfoForPerson(Long id, ContactInfo contactInfo);
   List<ContactInfo> getAllContactInfo(Long personId);
 
   List<Person> uniquePeople(Long addressBookId);
 
   List<Person> allPeopleInAddressBook(Long addressBookId);
+
+  List<Person> uniquePeopleToAddressBooks(Long addressBook1, Long addressBook2);
 }

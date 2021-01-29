@@ -3,11 +3,14 @@ package com.farzadz.addressbook.service;
 import com.farzadz.addressbook.config.ElementWithIDNotFoundException;
 import com.farzadz.addressbook.dao.AddressBookDAO;
 import com.farzadz.addressbook.domain.AddressBook;
+import com.farzadz.addressbook.domain.Person;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PersistentAddressBookService implements AddressBookService {
 
@@ -40,4 +43,5 @@ public class PersistentAddressBookService implements AddressBookService {
   public void deleteById(Long id) {
     addressBookDAO.deleteById(id);
   }
+
 }

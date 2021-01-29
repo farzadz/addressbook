@@ -34,4 +34,9 @@ public class ContactInfo {
     this.phone = contactInfo.getPhone();
     this.description = contactInfo.getDescription();
   }
+
+  public void setPerson(Person person){
+    this.person = person;
+    person.getContactInfos().add(this);
+  }
 }

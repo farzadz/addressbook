@@ -1,6 +1,7 @@
 package com.farzadz.addressbook.domain;
 
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ public class AddressBook {
   private String description;
 
   @ManyToMany(mappedBy = "addressBooks")
-  private Set<Person> people;
+  private List<Person> people = new LinkedList<>();
 
   public void updateUpdatableProperties(AddressBook addressBook) {
     this.name = addressBook.getName();
