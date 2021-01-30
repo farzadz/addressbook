@@ -34,9 +34,13 @@ public class PersonDTOConverter extends CustomConverter<PersonDTO, Person> {
 
   @Override
   public Person convert(PersonDTO source, Type<? extends Person> destinationType, MappingContext mappingContext) {
-    return new Person(source.getId(), source.getName(), source.getDescription(),
-        contactInfoMapper.mapAsList(source.getContactInfos(), ContactInfo.class),
+    Person person = new Person();
+    person.setId(source.getId());
+    person.setName(source.getName());
+    person.setDescription(source.getDescription());
+    person.setContactInfos(contactInfoMapper.mapAsList(source.getContactInfos(), ContactInfo.class));
+    person.setAddressBooks(
         source.getAddressBooks().stream().map(adb -> addressBookService.findById(adb)).collect(Collectors.toList()));
-
+    return person;
   }
 }

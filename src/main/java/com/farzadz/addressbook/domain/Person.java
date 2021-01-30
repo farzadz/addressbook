@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +36,7 @@ public class Person {
 
   private String description;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "person")
   private List<ContactInfo> contactInfos = new LinkedList<>();
 
   @ManyToMany
@@ -48,9 +49,8 @@ public class Person {
   }
 
   public void setContactInfos(List<ContactInfo> contactInfos) {
-    contactInfos.stream().forEach(contactInfo -> {
+    contactInfos.forEach(contactInfo -> {
       contactInfo.setPerson(this);
-      this.contactInfos.add(contactInfo);
     });
   }
 

@@ -13,15 +13,7 @@ functionalities:
 ## Build and Run
 
 The latest version of the app uses postgresql9.6 as its datasource, and expects it to be running on port `5440` (Even
-for running some of the tests). For a standalone version that uses H2 in memory database do:
-
-```aidl
-git checkout c551ba4cdf
-```
-
-and run `./mvnw clean package` the executable jar will be available in `/target` and could be run
-with `java -jar target/addressbook-0.0.1-SNAPSHOT.jar`
-
+for running some of the tests). 
 ### Quickstart
 
 Using `docker-compose`:
