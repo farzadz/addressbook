@@ -1,5 +1,7 @@
 package com.farzadz.addressbook.service;
 
+import com.farzadz.addressbook.config.AddressBookRequestException;
+import com.farzadz.addressbook.config.ElementAlreadyExistsException;
 import com.farzadz.addressbook.config.ElementWithIDNotFoundException;
 import com.farzadz.addressbook.dao.AddressBookDAO;
 import com.farzadz.addressbook.domain.AddressBook;
@@ -18,7 +20,10 @@ public class PersistentAddressBookService implements AddressBookService {
 
   @Override
   public AddressBook create(AddressBook addressBook) {
-    return addressBookDAO.save(addressBook);
+    if(addressBook.getId() == null ) {
+      return addressBookDAO.save(addressBook);
+    }
+    throw new AddressBookRequestException("Invalid Id for address book");
   }
 
   @Override

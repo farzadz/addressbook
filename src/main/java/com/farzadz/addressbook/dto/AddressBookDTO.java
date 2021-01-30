@@ -1,16 +1,20 @@
 package com.farzadz.addressbook.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.util.LinkedList;
 import java.util.List;
 import lombok.Data;
 
 @Data
+@JsonInclude(Include.NON_NULL)
 public class AddressBookDTO {
 
   private Long id;
 
-  private Long name;
+  private String name;
 
-  private Long description;
+  private String description;
 
-  private List<PersonDTO> people;
+  private List<PersonDTO> people = new LinkedList<>();
 }

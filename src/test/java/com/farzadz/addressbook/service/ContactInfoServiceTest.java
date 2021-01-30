@@ -94,6 +94,27 @@ public class ContactInfoServiceTest {
 
   @Test
   public void updateById() {
+    ContactInfo contactInfo = new ContactInfo();
+    contactInfo.setPhone("1234");
+    contactInfo.setDescription("desc");
+    contactInfo.setPerson(person);
+
+    Long contactInfoDbId = contactInfoService.create(contactInfo).getId();
+
+    Person newPerson = new Person();
+    newPerson.setName("Jack");
+    newPerson = personService.create(newPerson);
+
+    ContactInfo newContactInfo = new ContactInfo();
+    newContactInfo.setPhone("4321");
+    newContactInfo.setDescription("other desc");
+    newContactInfo.setPerson(newPerson);
+
+    ContactInfo updatedContactInfo = contactInfoService.updateById(contactInfoDbId, newContactInfo);
+
+    assertEquals(newContactInfo.getPerson(), newPerson);
+    assertEquals(newContactInfo.getPhone(), updatedContactInfo.getPhone());
+    assertEquals(newContactInfo.getDescription(), updatedContactInfo.getDescription());
 
   }
 

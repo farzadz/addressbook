@@ -1,24 +1,19 @@
 package com.farzadz.addressbook.dto;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@JsonInclude(Include.NON_NULL)
 public class ContactInfoDTO {
 
   private Long id;
-
-  private Long personId;
 
   private String phone;
 
   private String description;
 
-  public ContactInfoDTO(Long personId, String phone, String description) {
-    this.personId = personId;
-    this.phone = phone;
-    this.description = description;
-  }
 }

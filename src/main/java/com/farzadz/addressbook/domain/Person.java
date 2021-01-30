@@ -35,7 +35,7 @@ public class Person {
 
   private String description;
 
-  @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "person")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
   private List<ContactInfo> contactInfos = new LinkedList<>();
 
   @ManyToMany
@@ -45,6 +45,13 @@ public class Person {
   public void updateUpdatableProperties(Person person) {
     this.setName(person.getName());
     this.setDescription(person.getDescription());
+  }
+
+  public void setContactInfos(List<ContactInfo> contactInfos) {
+    contactInfos.stream().forEach(contactInfo -> {
+      contactInfo.setPerson(this);
+      this.contactInfos.add(contactInfo);
+    });
   }
 
   public void addAddressBook(AddressBook addressBook) {

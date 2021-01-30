@@ -1,5 +1,7 @@
 package com.farzadz.addressbook.service;
 
+import com.farzadz.addressbook.config.AddressBookRequestException;
+import com.farzadz.addressbook.config.ElementAlreadyExistsException;
 import com.farzadz.addressbook.config.ElementWithIDNotFoundException;
 import com.farzadz.addressbook.dao.ContactInfoDAO;
 import com.farzadz.addressbook.domain.ContactInfo;
@@ -15,11 +17,12 @@ public class PersistentContactInfoService implements ContactInfoService {
 
   private final ContactInfoDAO contactInfoDAO;
 
-  private final PersonService personService;
-
   @Override
   public ContactInfo create(ContactInfo contactInfo) {
-    return contactInfoDAO.save(contactInfo);
+    if (contactInfo.getId() == null) {
+      return contactInfoDAO.save(contactInfo);
+    }
+    throw new AddressBookRequestException("Invalid Id for contact info");
   }
 
   @Override
@@ -42,6 +45,8 @@ public class PersistentContactInfoService implements ContactInfoService {
 
   @Override
   public void deleteById(Long id) {
+    ContactInfo contactInfo = findById(id);
+    contactInfo.getPerson().getContactInfos().remove(contactInfo);
     contactInfoDAO.deleteById(id);
   }
 

@@ -1,12 +1,15 @@
 package com.farzadz.addressbook.service;
 
+import com.farzadz.addressbook.config.AddressBookRequestException;
 import com.farzadz.addressbook.config.ElementWithIDNotFoundException;
 import com.farzadz.addressbook.dao.PersonDAO;
 import com.farzadz.addressbook.domain.ContactInfo;
 import com.farzadz.addressbook.domain.Person;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +23,10 @@ public class PersistentPersonService implements PersonService {
 
   @Override
   public Person create(Person person) {
-    return personDAO.save(person);
+    if (person.getId() == null) {
+      return personDAO.save(person);
+    }
+    throw new AddressBookRequestException("Invalid Id for person");
   }
 
   @Override
@@ -31,7 +37,7 @@ public class PersistentPersonService implements PersonService {
 
   @Override
   public List<Person> findAll() {
-    return personDAO.findAll();
+    return personDAO.findAll().stream().sorted(Comparator.comparing(Person::getName)).collect(Collectors.toList());
   }
 
   @Override
@@ -54,15 +60,9 @@ public class PersistentPersonService implements PersonService {
   }
 
   @Override
-  public List<Person> uniquePeople(Long addressBookId) {
-    return null;
-  }
-
-  @Override
   public List<Person> allPeopleInAddressBook(Long addressBookId) {
     return personDAO.findByAddressBooksId(addressBookId);
   }
-
 
   /**
    * Finds people who are in either of the two addressBooks but not both.

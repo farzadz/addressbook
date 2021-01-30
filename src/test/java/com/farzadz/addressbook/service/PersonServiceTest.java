@@ -71,18 +71,20 @@ class PersonServiceTest {
   void findAll() {
 
     Person person1 = new Person();
-    person1.setName("Jill");
+    person1.setName("Al");
 
     Person person2 = new Person();
     person2.setName("Joe");
 
-    personService.create(person1);
-    personService.create(person2);
+    Person person1InDb = personService.create(person1);
+    Person person2InDb = personService.create(person2);
 
     List<Person> allPeople = personService.findAll();
     assertTrue(allPeople.stream().anyMatch(person -> person.getName().equals(person1.getName())));
 
     assertTrue(allPeople.stream().anyMatch(person -> person.getName().equals(person2.getName())));
+
+    assertTrue(allPeople.indexOf(person1InDb) < allPeople.indexOf(person2InDb));
   }
 
   @Test
