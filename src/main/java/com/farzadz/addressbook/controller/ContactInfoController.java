@@ -10,6 +10,8 @@ import com.farzadz.addressbook.domain.Person;
 import com.farzadz.addressbook.dto.ContactInfoDTO;
 import com.farzadz.addressbook.service.ContactInfoService;
 import com.farzadz.addressbook.service.PersonService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
+@Api(description = "Operations on Contact Information")
 public class ContactInfoController {
 
   private final ContactInfoService contactInfoService;
@@ -30,12 +33,14 @@ public class ContactInfoController {
 
   private final DTOMapper mapper;
 
+  @ApiOperation(value = "Retrieve all contacts", notes = "Returns every contact for every person in any address book")
   @RequestMapping(path = BASE_CONTACT_INFOS_PATH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody
   List<ContactInfoDTO> getAllContactInfos() {
     return mapper.mapAsList(contactInfoService.findAll(), ContactInfoDTO.class);
   }
 
+  @ApiOperation(value = "Create contact", notes = "Creates a contact for a person")
   @RequestMapping(path = PERSON_CONTACT_INFO_PATH, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody
   ContactInfoDTO createContactInfo(@PathVariable Long person, @RequestBody ContactInfoDTO contactInfoDTO) {
@@ -45,12 +50,14 @@ public class ContactInfoController {
     return mapper.map(contactInfoService.create(contactInfo), ContactInfoDTO.class);
   }
 
+  @ApiOperation(value = "Retrieve contact", notes = "Returns a single contact")
   @RequestMapping(path = BASE_CONTACT_INFO_PATH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody
   ContactInfoDTO getContactInfo(@PathVariable Long contact) {
     return mapper.map(contactInfoService.findById(contact), ContactInfoDTO.class);
   }
 
+  @ApiOperation(value = "Update contact", notes = "Updates a single contact's name and phone")
   @RequestMapping(path = BASE_CONTACT_INFO_PATH, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody
   ContactInfoDTO updateContactInfo(@PathVariable Long contact, @RequestBody ContactInfoDTO contactInfoDTO) {
@@ -58,6 +65,7 @@ public class ContactInfoController {
         ContactInfoDTO.class);
   }
 
+  @ApiOperation(value = "Delete contact", notes = "Deletes the specified contact")
   @RequestMapping(path = BASE_CONTACT_INFO_PATH, method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody
   void deleteContactInfo(@PathVariable Long contact) {

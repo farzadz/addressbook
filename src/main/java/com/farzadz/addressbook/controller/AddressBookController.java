@@ -8,6 +8,7 @@ import com.farzadz.addressbook.config.DTOMapper;
 import com.farzadz.addressbook.domain.AddressBook;
 import com.farzadz.addressbook.dto.AddressBookDTO;
 import com.farzadz.addressbook.service.AddressBookService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
+@Api(description = "Operations on Address Books")
 public class AddressBookController {
 
   private final AddressBookService addressBookService;

@@ -1,14 +1,12 @@
 package com.farzadz.addressbook.controller;
 
 import static com.farzadz.addressbook.config.RestEndpointConfig.BASE_PEOPLE_PATH;
-import static com.farzadz.addressbook.config.RestEndpointConfig.BASE_PERSON_ADDRESS_BOOK_PATH;
 import static com.farzadz.addressbook.config.RestEndpointConfig.BASE_PERSON_PATH;
 import static com.farzadz.addressbook.config.RestEndpointConfig.UNIQUE_PEOPLE_PATH;
 
 import com.farzadz.addressbook.config.DTOMapper;
 import com.farzadz.addressbook.domain.Person;
 import com.farzadz.addressbook.dto.PersonDTO;
-import com.farzadz.addressbook.service.AddressBookService;
 import com.farzadz.addressbook.service.PersonService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,12 +36,6 @@ public class PeopleController {
     return mapper.mapAsList(personService.findAll(), PersonDTO.class);
   }
 
-  @ApiOperation(value = "Find unique people to address books", notes = "Finds people who are not in both address books")
-  @RequestMapping(path = UNIQUE_PEOPLE_PATH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody
-  List<PersonDTO> getUniquePeople(@PathVariable Long addressbook1, @PathVariable Long addressbook2) {
-    return mapper.mapAsList(personService.uniquePeopleToAddressBooks(addressbook1, addressbook2), PersonDTO.class);
-  }
 
   @ApiOperation(value = "Create person with contacts", notes = "Creates a person with contacts")
   @RequestMapping(path = BASE_PEOPLE_PATH, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -73,6 +65,13 @@ public class PeopleController {
   public @ResponseBody
   void deletePerson(@PathVariable Long person) {
     personService.deleteById(person);
+  }
+
+  @ApiOperation(value = "Find unique people to address books", notes = "Finds people who are not in both address books")
+  @RequestMapping(path = UNIQUE_PEOPLE_PATH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  public @ResponseBody
+  List<PersonDTO> getUniquePeople(@PathVariable Long addressbook1, @PathVariable Long addressbook2) {
+    return mapper.mapAsList(personService.uniquePeopleToAddressBooks(addressbook1, addressbook2), PersonDTO.class);
   }
 
 }
